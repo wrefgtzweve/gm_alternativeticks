@@ -21,7 +21,7 @@
 
 Detouring::Hook AlternateTicks_detour;
 
-bool IsSimulatingOnAlternateTicks_detour(void* thisptr) {
+bool IsSimulatingOnAlternateTicks_detour() {
 	return true;
 }
 
@@ -37,9 +37,7 @@ GMOD_MODULE_OPEN() {
 		return 0;
 	}
 
-	bool* is_simulating_on_alternate_ticks_ptr = reinterpret_cast<bool*>(is_simulating_on_alternate_ticks);
-
-	AlternateTicks_detour.Create(is_simulating_on_alternate_ticks_ptr, IsSimulatingOnAlternateTicks_detour );
+	AlternateTicks_detour.Create(reinterpret_cast<void*>(is_simulating_on_alternate_ticks), reinterpret_cast<void*>(&IsSimulatingOnAlternateTicks_detour));
 
 	return 1;
 }
