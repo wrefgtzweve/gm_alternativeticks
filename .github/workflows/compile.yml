@@ -8,4 +8,5 @@ jobs:
     with:
       PROJECT_NAME: "alternativeticks"
       BUILD_64x: "false"
+      BUILD_WINDOWS: "false"
       REALM: "sv"
