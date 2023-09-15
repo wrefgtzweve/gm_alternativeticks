@@ -19,10 +19,21 @@
 	#endif
 #endif
 
+bool enableHook = false;
+typedef bool (*ShouldHideServer)();
 Detouring::Hook AlternateTicks_detour;
 
 bool IsSimulatingOnAlternateTicks_detour() {
-	return true;
+	if (enableHook) {
+		return true;
+	}
+	return AlternateTicks_detour.GetTrampoline<ShouldHideServer>()();
+}
+
+LUA_FUNCTION(enableAlternativeTicks) {
+	LUA->CheckType(1, GarrysMod::Lua::Type::BOOL);
+	enableHook = LUA->GetBool(1);
+	return 0;
 }
 
 GMOD_MODULE_OPEN() {
@@ -39,10 +50,25 @@ GMOD_MODULE_OPEN() {
 
 	AlternateTicks_detour.Create(reinterpret_cast<void*>(is_simulating_on_alternate_ticks), reinterpret_cast<void*>(&IsSimulatingOnAlternateTicks_detour));
 
+	LUA->PushSpecial(GarrysMod::Lua::SPECIAL_GLOB);
+		LUA->GetField(-1, "engine");
+			LUA->PushCFunction(enableAlternativeTicks);
+			LUA->SetField(-2, "EnableAlternativeTicks");
+		LUA->Pop();
+	LUA->Pop();
+
 	return 1;
 }
 
 GMOD_MODULE_CLOSE() {
 	AlternateTicks_detour.Destroy();
+
+	LUA->PushSpecial(GarrysMod::Lua::SPECIAL_GLOB);
+		LUA->GetField(-1, "engine");
+			LUA->PushNil();
+			LUA->SetField(-2, "EnableAlternativeTicks");
+		LUA->Pop();
+	LUA->Pop();
+
 	return 0;
 }
