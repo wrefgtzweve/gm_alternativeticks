@@ -1,14 +1,11 @@
 name: Build
 
-on:
-  push:
-  workflow_dispatch:
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
     uses: RaphaelIT7/gmodcommon-module-base/.github/workflows/compile.yml@workflow
     with:
       PROJECT_NAME: "alternativeticks"
-      BUILD_64x: "true"
+      BUILD_64x: "false"
       REALM: "sv"
-      FINAL_REALM: "sv"
