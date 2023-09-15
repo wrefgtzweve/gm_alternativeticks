@@ -9,13 +9,13 @@
 	#ifdef ARCHITECTURE_X86
 		Symbol symbol = Symbol::FromName("_ZN11CBaseEntity28IsSimulatingOnAlternateTicksEv");
 	#elif ARCHITECTURE_X86_64
-		Symbol symbol = Symbol::FromName("_ZNK11CBaseEntity28IsSimulatingOnAlternateTicksEv");
+		Symbol symbol = Symbol::FromName("_ZNK11CBaseEntity28IsSimulatingOnAlternateTicksEv"); // Invalid sigs, need to be updated
 	#endif
 	#elif SYSTEM_WINDOWS
 	#ifdef ARCHITECTURE_X86
-		Symbol symbol = Symbol::FromName("?IsSimulatingOnAlternateTicks@CBaseEntity@@QBE_NXZ");
+		Symbol symbol = Symbol::FromName("?IsSimulatingOnAlternateTicks@CBaseEntity@@QBE_NXZ"); // Invalid sigs, need to be updated
 	#elif ARCHITECTURE_X86_64
-		Symbol symbol = Symbol::FromName("?IsSimulatingOnAlternateTicks@CBaseEntity@@QEBA_NXZ");
+		Symbol symbol = Symbol::FromName("?IsSimulatingOnAlternateTicks@CBaseEntity@@QEBA_NXZ"); // Invalid sigs, need to be updated
 	#endif
 #endif
 
